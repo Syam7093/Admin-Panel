@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { useNavigate, useParams } from 'react-router-dom';
 import { validationSchema } from '../../utils';
 import { useDispatch,useSelector } from 'react-redux';
-import { addUser, updateUser } from '../../redux/user/userService';
+import { addUser, updateUser, updateusermain } from '../../redux/user/userService';
 
 const UpdateUser = () => {
     const navigate=useNavigate()
@@ -41,7 +41,7 @@ const UpdateUser = () => {
         ...values,
         id: singleuser.id,
     }
-   await dispatch(updateUser(datas))
+   await dispatch(updateusermain(datas))
     
     // resetForm();  
   }

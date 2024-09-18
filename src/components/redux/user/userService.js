@@ -47,7 +47,21 @@ export const updateUser = (id) => async (dispatch) => {
       console.error("Error fetching user:", error.response ? error.response.data : error.message);
     }
   };
-  
+
+export const updateusermain = (data) => async (dispatch) => {
+    try {
+        const response = await axios.patch(`http://localhost:3001/users/${data.id}`, data);
+        if (response.status === 200) {
+            console.log(response.data, "Updated user data");
+            // dispatch(getalluser()); // Fetch the updated list of users
+        } else {
+            console.log("Update failed with status:", response.status);
+        }
+    } catch (error) {
+        console.error("Error updating user:", error.response ? error.response.data : error.message);
+    }
+};
+
   
 
 export const getalluser=()=>async dispatch=>{
