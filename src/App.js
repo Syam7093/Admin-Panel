@@ -16,7 +16,7 @@ function App() {
      <Routes>
       <Route path="/" element={<UserList/>}></Route>
       <Route path="/offer" element={<OfferList/>}></Route>
-      <Route path="/userupdate" element={<UpdateUser/>}></Route>
+      <Route path="/userupdate/update/:id" element={<UpdateUser/>}></Route>
       <Route path="/useradd" element={<AddUser/>}></Route>
 
 

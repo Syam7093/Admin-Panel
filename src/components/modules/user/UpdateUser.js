@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { validationSchema } from '../../utils';
 import { useDispatch,useSelector } from 'react-redux';
 import { addUser, updateUser } from '../../redux/user/userService';
@@ -9,16 +9,27 @@ import { addUser, updateUser } from '../../redux/user/userService';
 const UpdateUser = () => {
     const navigate=useNavigate()
     const dispatch=useDispatch()
+    const {id}=useParams()
+    console.log(id,"id----")
 
     const singleuser=useSelector((state)=>state.userSlice.singleUser)
     console.log(singleuser,"singleuser----")
+
+    useEffect(()=>{
+      if(id)
+      {
+        dispatch(updateUser(id))
+      }
+    },[id,dispatch])
+    
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-        title: singleuser?.title || '',
-        name: singleuser?.name || '',
-        gender: singleuser?.gender || '',
-        status: singleuser?.status || '',
-        description: singleuser?.description || ''
+        title: singleuser?.title ,
+        name: singleuser?.name ,
+        gender: singleuser?.gender ,
+        status: singleuser?.status ,
+        description: singleuser?.description 
     },
     validationSchema:validationSchema(),
     // onSubmit: (values) => handleSubmit(values)

@@ -26,8 +26,8 @@ const UserList = () => {
    
     // console.log(users,"userrs----")
     const getsingleuser=(item)=>{
-        dispatch(setSingleuser(item))
-        navigate("/userupdate")
+        // dispatch(setSingleuser(item))
+        navigate(`/userupdate/update/${item}`)
     }
     const delteone=(item)=>{
         console.log(item,"syamitem")
@@ -74,7 +74,7 @@ const UserList = () => {
         <TableCell align="right">{row.status}</TableCell>
         <TableCell align="right">{row.description}</TableCell>
         <TableCell align="right">
-          <button onClick={() => getsingleuser(row)}>Update</button>
+          <button onClick={() => getsingleuser(row.id)}>Update</button>
           <button onClick={()=>{delteone(row)}}>Delete</button>
         </TableCell>
       </TableRow>
