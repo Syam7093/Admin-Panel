@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import PaginatedItems from '../../pagination/pagination'
 import Search from '../../pagination/search'
 import Table from '@mui/material/Table';
@@ -8,6 +8,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { storage } from '../../../firebase';
+import  {ref,uploadBytes,listAll,getDownloadURL} from "firebase/storage"
+import {v4} from "uuid"
+
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
   }
@@ -20,9 +24,36 @@ function createData(name, calories, fat, carbs, protein) {
   ];
 
 const OfferList = () => {
+ 
+  const  [imageupload,setimageupload]=useState(null)
+  const [imagelist,setimagelist]=useState([])
+  const imagelistreference=ref(storage,"images/")
+  useEffect(()=>{
+   listAll(imagelistreference).then((res)=>{
+    res.items.forEach((item)=>{
+      getDownloadURL(item).then((url)=>{
+        setimagelist((prev)=>[...prev,url])
+      })
+    })
+   })
+  },[])
+
+  const uploadimage=()=>{
+  if(imageupload== null) return
+  const imageref=ref(storage,`images/${imageupload.name + v4() }`)
+  uploadBytes(imageref,imageupload).then((snaphsot)=>{
+    getDownloadURL(snaphsot.ref).then((url)=>{
+      setimagelist((prev)=>[...prev,url])
+
+    })
+  })
+
+  
+
+  }
   return (
     <div>OfferList
-        <TableContainer component={Paper}>
+        {/* <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -50,7 +81,14 @@ const OfferList = () => {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer> */}
+    <input type="file" onChange={(e)=>{setimageupload(e.target.files[0])}}></input>
+    <button onClick={()=>{uploadimage()}}>upload image</button>
+    {imagelist.map((e)=>{
+      return(
+        <img src={e} height="40px" width="40px"></img>
+      )
+    })}
     </div>
   )
 }

@@ -60,6 +60,8 @@ const UserList = () => {
             <TableCell align="right">Gender</TableCell>
             <TableCell align="right">Status</TableCell>
             <TableCell align="right">Description</TableCell>
+            <TableCell align="right">image</TableCell>
+
             <TableCell align="right">Action</TableCell>
 
           </TableRow>
@@ -73,6 +75,8 @@ const UserList = () => {
         <TableCell align="right">{row.gender}</TableCell>
         <TableCell align="right">{row.status}</TableCell>
         <TableCell align="right">{row.description}</TableCell>
+        <TableCell align="right">          <img src={row.maleImageUrl} height="40px" width="40px"></img>
+        </TableCell>
         <TableCell align="right">
           <button onClick={() => getsingleuser(row.id)}>Update</button>
           <button onClick={()=>{delteone(row)}}>Delete</button>
